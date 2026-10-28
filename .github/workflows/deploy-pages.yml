@@ -36,6 +36,8 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Test project-site and offline updates
         run: npm run test:pages
+      - name: Test desktop and mobile interactions
+        run: npm run test:e2e
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5

@@ -227,3 +227,22 @@ test('Persian mode uses an RTL layout and a correctly localized calendar month',
   await expect(page.locator('.device-screen')).toHaveAttribute('dir', 'rtl')
   await expect(page.locator('.calendar-weekdays span').first()).toHaveText('ش')
 })
+
+test('home shows no inactive page indicators and keeps every app accessible', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+  for (const position of ['Open', 'Closed', 'Partially folded', 'Tabletop']) {
+    await pose(page, position).click()
+    for (const orientation of ['Portrait', 'Landscape']) {
+      await page.getByRole('button', { name: orientation, exact: true }).click()
+      await expect(page.locator('.home-page-dots')).toHaveCount(0)
+      await expect(page.locator('.home-page .app-button')).toHaveCount(13)
+      await expect(page.locator('.dock .app-button')).toHaveCount(4)
+      await expect(page.getByRole('button', { name: 'Open Wallet', exact: true })).toBeVisible()
+    }
+  }
+  await openApp(page, 'Calculator')
+  await expect(page.getByLabel('Calculator result')).toHaveText('0')
+  await home(page)
+  await expect(page.locator('.home-screen')).toBeVisible()
+})

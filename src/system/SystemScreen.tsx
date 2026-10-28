@@ -12,7 +12,7 @@ export function SystemScreen({ compact }: { compact: boolean }) {
   const prefersReducedMotion = useReducedMotion()
   const reduced = settings.reduceMotion || !!prefersReducedMotion
   const view = locked ? 'lock' : windows.length ? 'apps' : 'home'
-  return <div className={`device-screen theme-${settings.theme} wallpaper-${settings.wallpaper} ${settings.increaseContrast ? 'high-contrast' : ''}`} dir={settings.language === 'fa' ? 'rtl' : 'ltr'} style={{ '--text-scale': settings.textSize / 100 } as React.CSSProperties}>
+  return <div className={`device-screen theme-${settings.theme} wallpaper-${settings.wallpaper} ${settings.increaseContrast ? 'high-contrast' : ''}`} data-active-app={view === 'apps' ? windows[0]?.app : undefined} dir={settings.language === 'fa' ? 'rtl' : 'ltr'} style={{ '--text-scale': settings.textSize / 100 } as React.CSSProperties}>
     <div className="wallpaper-layer"/>
     <StatusBar compact={compact}/>
     <AnimatePresence mode="wait" initial={false}><motion.div key={view} className="screen-view" initial={reduced ? false : { opacity: 0, scale: view === 'apps' ? .96 : 1.02 }} animate={{ opacity: 1, scale: 1 }} exit={reduced ? {} : { opacity: 0, scale: .98 }} transition={{ duration: reduced ? 0 : .2 }}>

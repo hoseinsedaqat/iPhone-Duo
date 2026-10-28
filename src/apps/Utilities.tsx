@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, ChevronLeft, Cloud, Compass, FileText, Folder, MapPin, Plus, Search, Send, Sun, Wind } from 'lucide-react'
 import { apps } from './registry'
 import { AppIcon } from '../components/AppIcon'
@@ -26,8 +26,10 @@ export function MapsApp() {
 }
 export function MessagesApp() {
   const [messages, setMessages] = useState<string[]>(() => { try { return JSON.parse(localStorage.getItem('duo-messages-v1') || '[]') as string[] } catch { return [] } }); const [text, setText] = useState('')
+  const conversation = useRef<HTMLDivElement>(null)
+  useEffect(() => { if (conversation.current) conversation.current.scrollTop = conversation.current.scrollHeight }, [messages])
   const send = () => { if (!text.trim()) return; const next = [...messages, text.trim()]; setMessages(next); try { localStorage.setItem('duo-messages-v1', JSON.stringify(next)) } catch { /* display remains usable */ }; setText('') }
-  return <div className="app-root messages-app"><div className="messages-header"><h1>Messages</h1><span>LOCAL DEMO</span></div><div className="message-conversation app-scroll"><div className="message-date">Today · Simulated conversation</div><div className="message-bubble received">Hey! Welcome to your Duo concept.</div><div className="message-bubble received">There's a little more room for everything here.</div>{messages.map((message, i) => <div className="message-bubble sent" key={`${i}-${message}`}>{message}</div>)}</div><div className="message-compose"><input aria-label="Message" value={text} onChange={e => setText(e.target.value)} placeholder="Local demo message" onKeyDown={e => { if (e.key === 'Enter') send() }}/><button aria-label="Add local message" onClick={send}><Send size={17}/></button></div><small>Messages stay here and are not sent to anyone.</small></div>
+  return <div className="app-root messages-app"><div className="messages-header"><h1>Messages</h1><span>LOCAL DEMO</span></div><div className="message-conversation app-scroll" ref={conversation}><div className="message-date">Today · Simulated conversation</div><div className="message-bubble received">Hey! Welcome to your Duo concept.</div><div className="message-bubble received">There's a little more room for everything here.</div>{messages.map((message, i) => <div className="message-bubble sent" key={`${i}-${message}`}>{message}</div>)}</div><div className="message-compose"><input aria-label="Message" value={text} onChange={e => setText(e.target.value)} placeholder="Local demo message" onKeyDown={e => { if (e.key === 'Enter') send() }}/><button aria-label="Add local message" onClick={send}><Send size={17}/></button></div><small>Messages stay here and are not sent to anyone.</small></div>
 }
 export function PhoneApp() {
   const [number, setNumber] = useState(''); const [message, setMessage] = useState('')

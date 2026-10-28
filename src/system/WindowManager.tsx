@@ -37,7 +37,17 @@ export function WindowManager({ compact }: { compact: boolean }) {
 }
 function AppWindowView({ window, compact }: { window: AppWindow; compact: boolean }) {
   const { closeWindow, setOverlay, goHome, setMode } = useSystemStore(); const [menu, setMenu] = useState(false); const t = useT()
-  return <div className="app-window"><div className="window-titlebar"><div><AppIcon id={window.app} size={17}/><span>{t(apps[window.app].name)}</span></div><div><button aria-label={`Multitasking options for ${apps[window.app].name}`} onClick={() => setMenu(!menu)}><MoreHorizontal size={18}/></button><button aria-label={`Close ${apps[window.app].name}`} onClick={() => closeWindow(window.id)}><X size={15}/></button></div></div><AppErrorBoundary><Suspense fallback={<div className="app-root app-loading">Opening {apps[window.app].name}…</div>}><AppRenderer window={window} compact={compact}/></Suspense></AppErrorBoundary>{menu && <><button className="menu-backdrop" aria-label="Close multitasking menu" onClick={() => setMenu(false)}/><div className="multitasking-menu"><button onClick={() => { if (compact) setMode('open'); setMenu(false); setOverlay('split-picker') }}><Grid2X2 size={15}/>{t('Open in Split View')}</button><button onClick={() => { setMenu(false); setOverlay('switcher') }}><MoreHorizontal size={15}/>{t('Recent Apps')}</button><button onClick={() => { setMenu(false); goHome() }}><Home size={15}/>{t('Go Home')}</button></div></>}</div>
+  return <div className="app-window" data-app={window.app}>
+    <div className="window-titlebar">
+      <div className="window-title"><AppIcon id={window.app} size={17}/><span>{t(apps[window.app].name)}</span></div>
+      <div className="window-actions">
+        <button aria-label={`Multitasking options for ${apps[window.app].name}`} aria-expanded={menu} onClick={() => setMenu(!menu)}><MoreHorizontal size={18}/></button>
+        <button aria-label={`Close ${apps[window.app].name}`} onClick={() => closeWindow(window.id)}><X size={15}/></button>
+      </div>
+    </div>
+    <AppErrorBoundary><Suspense fallback={<div className="app-root app-loading">Opening {apps[window.app].name}…</div>}><AppRenderer window={window} compact={compact}/></Suspense></AppErrorBoundary>
+    {menu && <><button className="menu-backdrop" aria-label="Close multitasking menu" onClick={() => setMenu(false)}/><div className="multitasking-menu"><button onClick={() => { if (compact) setMode('open'); setMenu(false); setOverlay('split-picker') }}><Grid2X2 size={15}/>{t('Open in Split View')}</button><button onClick={() => { setMenu(false); setOverlay('switcher') }}><MoreHorizontal size={15}/>{t('Recent Apps')}</button><button onClick={() => { setMenu(false); goHome() }}><Home size={15}/>{t('Go Home')}</button></div></>}
+  </div>
 }
 function AppRenderer({ window, compact }: { window: AppWindow; compact: boolean }) {
   switch (window.app) {

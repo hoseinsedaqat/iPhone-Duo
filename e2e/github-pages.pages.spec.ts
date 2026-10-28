@@ -10,6 +10,7 @@ test('project Pages loads assets, manifest, and never-opened apps offline', asyn
   await page.goto('./')
   await expect(page.locator('.home-screen')).toBeVisible()
   await expect(page.locator('.wallpaper-layer')).toHaveCSS('background-image', /\/iPhone-Duo\/wallpapers\/aurora\.png/)
+  await expect(page.locator('.site-shell')).toHaveCSS('background-image', /\/iPhone-Duo\/images\/glass-atmosphere\.jpg/)
 
   const manifest = await page.evaluate(async () => {
     const link = document.querySelector<HTMLLinkElement>('link[rel="manifest"]')!
@@ -31,7 +32,7 @@ test('project Pages loads assets, manifest, and never-opened apps offline', asyn
     icons: [`${basePath}icons/icon-192.png`, `${basePath}icons/icon-512.png`, `${basePath}icons/icon.svg`],
   })
 
-  await page.getByRole('button', { name: 'Open Photos' }).click()
+  await page.getByRole('button', { name: 'Open Photos', exact: true }).click()
   const sample = page.getByAltText('The coast · Sample photo')
   await expect(sample).toHaveAttribute('src', `${basePath}images/coast.png`)
   await expect.poll(() => sample.evaluate(image => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
@@ -46,6 +47,13 @@ test('project Pages loads assets, manifest, and never-opened apps offline', asyn
   await context.setOffline(true)
   await page.reload()
   await expect(page.locator('.home-screen')).toBeVisible()
+  const offlineBackgroundWidth = await page.evaluate(async () => {
+    const image = new Image()
+    image.src = new URL('images/glass-atmosphere.jpg', location.href).href
+    await image.decode()
+    return image.naturalWidth
+  })
+  expect(offlineBackgroundWidth).toBeGreaterThan(0)
   await page.getByRole('button', { name: 'Open Safari' }).click()
   await page.getByLabel('Search or enter website name').fill('offline Pages search')
   await page.getByLabel('Search or enter website name').press('Enter')

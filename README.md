@@ -27,7 +27,7 @@ The dev and preview servers bind to `0.0.0.0` and allow preview hosts so the app
 برای فعال‌سازی، مدیر مخزن باید در بخش **Settings → Pages** منبع انتشار را روی **GitHub Actions** بگذارد. پس از ادغام گردش‌کار در شاخهٔ `test`، هر تغییر در آن شاخه به‌صورت خودکار منتشر می‌شود.
 
 1. In the repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. An administrator must enable this once.
-2. Merge the Pages workflow into `test`. Every subsequent push to `test` builds and deploys automatically; the workflow can also be started manually for `test` from the **Actions** tab. It checks lint, unit tests, and the project-site/offline browser tests before deployment. Check that its deployment job succeeds before visiting the site.
+2. Merge the Pages workflow into `test`. Every subsequent push to `test` builds and deploys automatically; the workflow can also be started manually for `test` from the **Actions** tab. It checks lint, unit tests, project-site/offline behavior, and desktop/mobile browser interactions before deployment. Check that its deployment job succeeds before visiting the site.
 3. With the default project-site configuration, the expected address is [https://hoseinsedaqat.github.io/iPhone-Duo/](https://hoseinsedaqat.github.io/iPhone-Duo/). GitHub may take a short time to make a successful deployment available.
 
 The workflow obtains the appropriate base path from `actions/configure-pages`, so a project site uses `/iPhone-Duo/` while a root site or custom domain can use `/`. For a manual production build or local preview under a subpath, set `DUO_BASE_PATH` before building and previewing:
@@ -43,7 +43,7 @@ Without `DUO_BASE_PATH`, the app builds for `/`. The web manifest and service wo
 
 - The simulator starts on the Home Screen so the apps are immediately discoverable. Use **Lock screen** below the device to see the lock screen; click the unlock hint or swipe up. The clock and date use the browser's current time.
 - Use **Device controls** outside the frame for open, closed, partially folded, tabletop, portrait, and landscape. The panel can be hidden. The outer display is modeled around the announced 5.4-inch class and the inner around 7.6 inches; browser pixels and the folding poses are visual approximations, not calibrated hardware dimensions.
-- Click an icon to open an app. Click the bottom home indicator to return Home. On Home, click the indicator for recent apps. Drag icons to reorder them, or press and hold/right-click for a menu. Dock icons can be reordered within the Dock. The order is saved.
+- Click an icon to open an app edge-to-edge on either display. Its status bar and window controls have separate safe areas. Click the bottom home indicator to return Home; on Home, click the indicator for recent apps. Drag icons to reorder them, or press and hold/right-click for a menu. Dock icons can be reordered within the Dock. The order is saved.
 - In an app, choose its **•••** multitasking menu and **Open in Split View**, then select another app—including a second Safari window. Swap, resize, close either window, or save the pair. The resize range is intentionally limited so the central reserved hinge area remains clear. Closing the device collapses the view; reopening restores the pair.
 - The Today View widget menu controls the weather, calendar, and photo widgets. Calendar events for today are reflected in the widget. In Settings, switch language to فارسی for an RTL interface and Persian calendar. Most core system labels and major controls are translated; some demo copy and user/sample data remain in English.
 - **Reset simulator** asks for confirmation, then removes this origin's simulator settings, notes, events, browser data, transactions, and captured photos. The static offline cache is not personal data and is not removed. Reset recreates the initial sample data; use Accounting → Transactions → **Clear all transactions** to start with an empty ledger instead.
@@ -75,7 +75,7 @@ npm run test:pages           # tests a project-site subpath, assets, and offline
 npm run build                # strict TypeScript and Vite production build
 ```
 
-Playwright may require its operating-system browser dependencies (`npx playwright install-deps chromium` on supported systems). Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium executable if needed. The browser suite checks pose transitions, theme and wallpaper persistence, Safari tabs/bookmarks/history, accounting validation and exact balances, calculator operations, independent Split View windows and hinge clearance, notes/events, icon ordering, reset, lock simulation, and touch interactions. Mobile coverage is browser emulation, not a claim of testing on every physical device.
+Playwright may require its operating-system browser dependencies (`npx playwright install-deps chromium` on supported systems). Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium executable if needed. The browser suite checks full-bleed app bounds and status-bar separation on both displays, portrait and landscape touch layouts, pose transitions, theme and wallpaper persistence, Safari tabs/bookmarks/history, accounting validation and exact balances, calculator operations, independent Split View windows and hinge clearance, notes/events, icon ordering, reset, lock simulation, and touch interactions. Mobile coverage is browser emulation, not a claim of testing on every physical device.
 
 ## Architecture
 
@@ -86,7 +86,7 @@ Playwright may require its operating-system browser dependencies (`npx playwrigh
 - `src/utils` — currency, calculator, calendar, time, and translation helpers.
 - `src/tests` and `e2e` — unit/component and browser tests.
 
-React + strict TypeScript, Vite, Tailwind utilities/custom CSS, Motion, Zustand, Dexie, and Lucide are used. The original wallpaper and travel image in `public/` were generated for this concept; app artwork is custom SVG/CSS and Lucide-based. No Apple design-kit files or proprietary fonts are bundled.
+React + strict TypeScript, Vite, Tailwind utilities/custom CSS, Motion, Zustand, Dexie, and Lucide are used. The wallpaper, travel image, and glass backdrop in `public/` were generated for this concept; launcher icons are original SVG artwork using familiar mobile-app metaphors. They are not Apple's original icon files. No Apple model, design-kit files, or proprietary fonts are bundled.
 
 ## Design references
 
@@ -95,5 +95,7 @@ The physical and adaptive-layout starting points were reviewed against:
 1. [Apple Newsroom — Apple unveils iPhone Duo](https://www.apple.com/newsroom/2026/09/apple-unveils-iphone-duo/)
 2. [Apple Human Interface Guidelines — Designing for iPhone Duo](https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo)
 3. [Apple Design Resources](https://developer.apple.com/design/resources/)
+
+The [GSMArena iPhone Duo photo gallery](https://www.gsmarena.com/apple_iphone_duo_fold-pictures-13804.php) and [iPhone Duo Fold Preview](https://iphone-duo-tawny.vercel.app/) were also reviewed for visual inspiration. The latter uses separately downloaded Apple assets; none of those assets are bundled here.
 
 Unspecified interaction details, sample content, animations, layouts, and hardware rendering are design decisions for this web concept—not claims about Apple's implementation. Apple, iPhone, iOS, and Safari are trademarks of their respective owner.

@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
 
     const assets = new Set([
       'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png',
-      'wallpapers/aurora.png', 'images/coast.png',
+      'wallpapers/aurora.png', 'images/coast.png', 'images/glass-atmosphere.jpg',
     ].map(scopedUrl))
     for (const match of html.matchAll(/(?:src|href)=["']([^"'?#]+)["']/g)) {
       const url = new URL(match[1], scope)

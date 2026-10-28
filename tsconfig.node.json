@@ -18,6 +18,7 @@
   "include": [
     "vite.config.ts",
     "playwright.config.ts",
-    "playwright.offline.config.ts"
+    "playwright.offline.config.ts",
+    "playwright.pages.config.ts"
   ]
 }

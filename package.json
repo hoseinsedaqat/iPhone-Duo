@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "test:offline": "playwright test --config=playwright.offline.config.ts"
+    "test:offline": "playwright test --config=playwright.offline.config.ts",
+    "test:pages": "playwright test --config=playwright.pages.config.ts"
   },
   "dependencies": {
     "dexie": "^4.0.11",

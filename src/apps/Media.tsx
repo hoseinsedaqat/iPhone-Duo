@@ -7,7 +7,7 @@ import { useT } from '../utils/i18n'
 export function PhotosApp() {
   const t = useT(); const photos = useLiveQuery(() => db.photos.orderBy('createdAt').reverse().toArray(), [], [])
   const [selected, setSelected] = useState<{ src: string; label: string } | null>(null)
-  const gallery = [{ src: '/images/coast.png', label: 'The coast · Sample photo' }, { src: '/wallpapers/aurora.png', label: 'Aurora · Original artwork' }, ...photos.map(photo => ({ src: photo.dataUrl, label: `Camera · ${new Date(photo.createdAt).toLocaleDateString()}` }))]
+  const gallery = [{ src: `${import.meta.env.BASE_URL}images/coast.png`, label: 'The coast · Sample photo' }, { src: `${import.meta.env.BASE_URL}wallpapers/aurora.png`, label: 'Aurora · Original artwork' }, ...photos.map(photo => ({ src: photo.dataUrl, label: `Camera · ${new Date(photo.createdAt).toLocaleDateString()}` }))]
   return <div className="app-root photos-app"><div className="photo-header"><div><span className="eyebrow">YOUR LITTLE MOMENTS</span><h1>{t('Photos')}</h1></div><span>{gallery.length} photos</span></div><div className="photos-content app-scroll"><h2>Library</h2><p>Sample photos and your captures, all in one place.</p><div className="photo-grid">{gallery.map((photo, index) => <button key={`${photo.label}-${index}`} onClick={() => setSelected(photo)}><img src={photo.src} alt={photo.label}/></button>)}</div></div>{selected && <div className="photo-lightbox"><div><button aria-label="Close photo" onClick={() => setSelected(null)}><ChevronLeft size={20}/></button><strong>{selected.label}</strong><span/></div><img src={selected.src} alt={selected.label}/><small>Stored locally in your browser</small></div>}</div>
 }
 export function CameraApp() {

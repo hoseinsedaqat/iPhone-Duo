@@ -22,6 +22,23 @@ npm run preview
 
 The dev and preview servers bind to `0.0.0.0` and allow preview hosts so the app works behind a remote development proxy. Do not expose the development server to untrusted networks.
 
+## انتشار در GitHub Pages / GitHub Pages deployment
+
+برای فعال‌سازی، مدیر مخزن باید در بخش **Settings → Pages** منبع انتشار را روی **GitHub Actions** بگذارد. پس از ادغام گردش‌کار در شاخهٔ `test`، هر تغییر در آن شاخه به‌صورت خودکار منتشر می‌شود.
+
+1. In the repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. An administrator must enable this once.
+2. Merge the Pages workflow into `test`. Every subsequent push to `test` builds and deploys automatically; the workflow can also be started manually for `test` from the **Actions** tab. It checks lint, unit tests, and the project-site/offline browser tests before deployment. Check that its deployment job succeeds before visiting the site.
+3. With the default project-site configuration, the expected address is [https://hoseinsedaqat.github.io/iPhone-Duo/](https://hoseinsedaqat.github.io/iPhone-Duo/). GitHub may take a short time to make a successful deployment available.
+
+The workflow obtains the appropriate base path from `actions/configure-pages`, so a project site uses `/iPhone-Duo/` while a root site or custom domain can use `/`. For a manual production build or local preview under a subpath, set `DUO_BASE_PATH` before building and previewing:
+
+```bash
+DUO_BASE_PATH=/iPhone-Duo/ npm run build
+DUO_BASE_PATH=/iPhone-Duo/ npm run preview
+```
+
+Without `DUO_BASE_PATH`, the app builds for `/`. The web manifest and service worker stay within the chosen base path. Browser data from a local preview is separate from data on the deployed site's origin.
+
 ## استفاده / How to explore
 
 - The simulator starts on the Home Screen so the apps are immediately discoverable. Use **Lock screen** below the device to see the lock screen; click the unlock hint or swipe up. The clock and date use the browser's current time.
@@ -44,7 +61,7 @@ Settings, icon order, widget choices, recent apps and saved pairs use `localStor
 
 ## PWA and offline behavior
 
-The production build includes a web manifest and service worker. On a secure origin (or localhost), after one successful online visit and service-worker installation, the shell, built-in lazy app chunks, artwork and internal Safari demo pages can run offline. External websites and browser camera availability remain subject to network and browser restrictions. Installation is a web-app convenience, not a native iOS app.
+The production build includes a web manifest and service worker. On a secure origin (or localhost), after one successful online visit and service-worker installation, the shell, built-in lazy app chunks, artwork and internal Safari demo pages can run offline. Each changed build versions the worker and installs a fresh, scope-specific offline cache; an update requires an online visit. External websites and browser camera availability remain subject to network and browser restrictions. Installation is a web-app convenience, not a native iOS app.
 
 ## Tests
 
@@ -54,6 +71,7 @@ npm run test                 # Vitest + React Testing Library
 npx playwright install chromium
 npm run test:e2e             # desktop Chromium + touch/mobile emulation
 npm run test:offline         # builds/serves production and tests the PWA offline
+npm run test:pages           # tests a project-site subpath, assets, and offline apps
 npm run build                # strict TypeScript and Vite production build
 ```
 

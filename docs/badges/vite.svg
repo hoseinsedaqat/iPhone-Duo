@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="61" height="22" viewBox="0 0 61 22" role="img" aria-label="Vite 6">
+  <title>Vite 6</title>
+  <clipPath id="rounded"><rect width="61" height="22" rx="4"/></clipPath>
+  <g clip-path="url(#rounded)"><path fill="#303846" d="M0 0h38v22H0z"/><path fill="#646cff" d="M38 0h23v22h-23z"/></g>
+  <g fill="#fff" font-family="Verdana, DejaVu Sans, sans-serif" font-size="10" text-anchor="middle">
+    <text x="19.0" y="15">Vite</text><text x="49.5" y="15">6</text>
+  </g>
+</svg>

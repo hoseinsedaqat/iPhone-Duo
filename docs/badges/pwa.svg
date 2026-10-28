@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="133" height="22" viewBox="0 0 133 22" role="img" aria-label="PWA offline support">
+  <title>PWA offline support</title>
+  <clipPath id="rounded"><rect width="133" height="22" rx="4"/></clipPath>
+  <g clip-path="url(#rounded)"><path fill="#303846" d="M0 0h39v22H0z"/><path fill="#6750a4" d="M39 0h94v22h-94z"/></g>
+  <g fill="#fff" font-family="Verdana, DejaVu Sans, sans-serif" font-size="10" text-anchor="middle">
+    <text x="19.5" y="15">PWA</text><text x="86.0" y="15">offline support</text>
+  </g>
+</svg>

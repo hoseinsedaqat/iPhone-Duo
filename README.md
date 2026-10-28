@@ -1,101 +1,178 @@
-# Unofficial iPhone Duo Web Simulator Concept
+<h1 align="center">iPhone Duo Web Simulator</h1>
 
-یک شبیه‌ساز تعاملی و مستقل در مرورگر، با رابطی الهام‌گرفته از iPhone Duo و iOS 27. **این پروژه محصول اپل نیست، به اپل وابسته نیست و iOS یا موتور واقعی Safari را اجرا نمی‌کند.**
+<p align="center">
+  <strong>Two screens. One browser. A new way to explore.</strong><br />
+  An interactive foldable phone concept, built for the web.
+</p>
 
-An independent, interactive browser concept—not an Apple product, an iOS emulator, or the real Safari engine. The application has no backend and does not sign in to Apple services.
+<p align="center">
+  <a href="https://hoseinsedaqat.github.io/iPhone-Duo/"><strong>Explore the live demo</strong></a>
+  &nbsp;·&nbsp; <a href="#key-features">Features</a>
+  &nbsp;·&nbsp; <a href="#screenshots">Screenshots</a>
+  &nbsp;·&nbsp; <a href="#run-locally">Run locally</a>
+  &nbsp;·&nbsp; <a href="#project-structure">Architecture</a>
+</p>
 
-## اجرا / Getting started
+<p align="center">
+  <img src="docs/badges/react.svg" alt="Built with React 19" />
+  <img src="docs/badges/typescript.svg" alt="Built with TypeScript 5" />
+  <img src="docs/badges/vite.svg" alt="Built with Vite 6" />
+  <img src="docs/badges/pwa.svg" alt="Progressive web app with offline support" />
+</p>
 
-Requirements: Node.js 20+ and npm.
+![The iPhone Duo web simulator showing the unfolded Home Screen, widgets, app icons, dock, and device controls.](docs/screenshots/iphone-duo-simulator-home.webp)
+
+**iPhone Duo Web Simulator** is an interactive, iOS-inspired foldable phone concept built with React and TypeScript. Switch between a spacious inner display and a compact outer display, open interactive app concepts, and explore multitasking directly in your browser—no account or installation required.
+
+> [!IMPORTANT]
+> This is an **unofficial, independent concept**. It is not an Apple product or an iOS emulator, does not run the real Safari engine, and is not affiliated with Apple.
+
+## Key features
+
+| Experience | What you can explore |
+| --- | --- |
+| **Two display layouts** | Move between an inner display inspired by the 7.6-inch class and an outer display inspired by the 5.4-inch class. |
+| **Flexible device poses** | Choose open, closed, partially folded, or tabletop; switch between portrait and landscape. The poses are visual approximations, not a physical 3D hinge simulation. |
+| **Split View** | Open two app windows side by side, resize or swap them, and save a pair. Two independent Safari-inspired windows are supported. |
+| **Interactive app concepts** | Explore 17 app experiences, including Safari, Accounting, Calculator, Notes, Calendar, Camera, and Settings. |
+| **Personalization** | Change the theme, wallpaper, text size, selected accessibility options, widget choices, and icon order. |
+| **English and Persian** | Switch to a Persian right-to-left layout and calendar; some demo copy and sample data remain in English. |
+| **Local-first PWA** | Keep simulator data in your browser and use the built-in experience offline after the initial online visit and service-worker installation. |
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/iphone-duo-split-view.webp" alt="Split View with the Safari-inspired start page and Calculator side by side" /></td>
+    <td width="50%"><img src="docs/screenshots/iphone-duo-outer-display.webp" alt="The simulator's compact outer Home Screen in the closed device pose" /></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Split View</strong><br />Two interactive app windows on the inner display.</td>
+    <td align="center"><strong>Outer display</strong><br />A compact layout when the device is closed.</td>
+  </tr>
+</table>
+
+*Screenshots are captured from this simulator; device dimensions and folding poses are illustrative.*
+
+## Apps at a glance
+
+- **Everyday tools:** Calculator, Calendar, Clock, Notes, Photos, Camera, and Files.
+- **Explore and personalize:** Safari-inspired browser, Settings, Weather, Maps, and App Store concept.
+- **More to try:** Accounting, Messages, Phone, Music, and Wallet concepts.
+
+The **Accounting** demo supports transactions, categories, multiple sample accounts, filters, and search. Monetary values are stored as integer USD cents and totals use `BigInt` rather than floating-point arithmetic. It is a local demonstration—not financial advice or a bank connection.
+
+The **Safari-inspired browser** offers tabs, independent windows, history, bookmarks, editable favorites, and internal demo pages. External sites only display where embedding is allowed; the sandboxed iframe has scripts disabled, so many sites will not work. Search is simulated and does not silently send queries to a search provider.
+
+## Run locally
+
+### Requirements
+
+- [Node.js](https://nodejs.org/) 20 or later
+- npm
 
 ```bash
+git clone https://github.com/hoseinsedaqat/iPhone-Duo.git
+cd iPhone-Duo
 npm ci
 npm run dev
 ```
 
-Open the address printed by Vite. For a production build and local preview:
+Open the URL printed by Vite, normally `http://localhost:5173`. To build and preview the production version:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-The dev and preview servers bind to `0.0.0.0` and allow preview hosts so the app works behind a remote development proxy. Do not expose the development server to untrusted networks.
+The development and preview servers bind to `0.0.0.0` for remote preview support. Do not expose a development server to untrusted networks.
 
-## انتشار در GitHub Pages / GitHub Pages deployment
+## How to explore
 
-برای فعال‌سازی، مدیر مخزن باید در بخش **Settings → Pages** منبع انتشار را روی **GitHub Actions** بگذارد. پس از ادغام گردش‌کار در شاخهٔ `test`، هر تغییر در آن شاخه به‌صورت خودکار منتشر می‌شود.
+1. **Choose a pose.** Use the controls below the device to switch displays, positions, and orientation. Hide the control panel with the eye button if you prefer.
+2. **Open an app.** Select an icon, then use the home indicator to return Home. On the Home Screen, the indicator opens recent apps. Drag icons to reorder them; press and hold or right-click for more options.
+3. **Try Split View.** In an app, open its **•••** menu, choose **Open in Split View**, and select a second app. Swap, resize, save, or close the pair. A reserved area keeps the central hinge clear.
+4. **Make it yours.** Explore Settings and the widget menu for themes, wallpapers, language, accessibility options, and layout choices.
+5. **Start fresh when needed.** The reset control asks for confirmation before removing this origin's simulator data and restoring the sample data.
 
-1. In the repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**. An administrator must enable this once.
-2. Merge the Pages workflow into `test`. Every subsequent push to `test` builds and deploys automatically; the workflow can also be started manually for `test` from the **Actions** tab. It checks lint, unit tests, project-site/offline behavior, and desktop/mobile browser interactions before deployment. Check that its deployment job succeeds before visiting the site.
-3. With the default project-site configuration, the expected address is [https://hoseinsedaqat.github.io/iPhone-Duo/](https://hoseinsedaqat.github.io/iPhone-Duo/). GitHub may take a short time to make a successful deployment available.
+## Privacy, safety, and limitations
 
-The workflow obtains the appropriate base path from `actions/configure-pages`, so a project site uses `/iPhone-Duo/` while a root site or custom domain can use `/`. For a manual production build or local preview under a subpath, set `DUO_BASE_PATH` before building and previewing:
+- **Your data stays local.** Settings, icon order, and widget choices use `localStorage`; app data such as notes, transactions, browser history, calendar events, and captured photos use IndexedDB via Dexie. The project has no backend and does not sign in to Apple services. Browser storage can be cleared, restricted, or unavailable.
+- **Camera access is optional.** The Camera requests explicit browser permission before using a camera. It requires a supported browser, a secure context or localhost, and an available device; captured photos are stored locally.
+- **This is not device security.** The optional demo passcode is `1234`; it does not authenticate a user or protect data. Never enter real passwords or sensitive financial information.
+- **Several services are simulated.** Messages are not sent; phone calls, payments, native app installation, and music playback are not provided. Network and battery indicators do not control or report real hardware.
+- **The hardware is an approximation.** Display sizes, CSS perspective, and poses are illustrative. The two halves are not an articulated 3D model, and browser pixels are not calibrated hardware dimensions.
+
+## PWA and offline use
+
+On a secure origin (or localhost), the production build can be installed as a progressive web app. After one successful online visit and service-worker installation, the shell, artwork, built-in app chunks, and internal browser demo pages are available offline. External websites and camera access remain subject to network and browser restrictions. A new build requires an online visit to install its updated cache.
+
+## Deploy to GitHub Pages
+
+The included workflow builds and deploys from the `test` branch. A repository administrator must set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. Once enabled, pushes to `test` trigger the workflow; check that the deployment succeeds before visiting the [project site](https://hoseinsedaqat.github.io/iPhone-Duo/).
+
+The workflow gets its base path from GitHub Pages. To build or preview a project site manually under `/iPhone-Duo/`:
 
 ```bash
 DUO_BASE_PATH=/iPhone-Duo/ npm run build
 DUO_BASE_PATH=/iPhone-Duo/ npm run preview
 ```
 
-Without `DUO_BASE_PATH`, the app builds for `/`. The web manifest and service worker stay within the chosen base path. Browser data from a local preview is separate from data on the deployed site's origin.
+Without `DUO_BASE_PATH`, the app builds for `/`. The manifest and service worker stay within the selected deployment scope. Each browser origin has its own local data.
 
-## استفاده / How to explore
-
-- The simulator starts on the Home Screen so the apps are immediately discoverable. Use **Lock screen** below the device to see the lock screen; click the unlock hint or swipe up. The clock and date use the browser's current time.
-- Use **Device controls** outside the frame for open, closed, partially folded, tabletop, portrait, and landscape. The panel can be hidden. The outer display is modeled around the announced 5.4-inch class and the inner around 7.6 inches; browser pixels and the folding poses are visual approximations, not calibrated hardware dimensions.
-- Click an icon to open an app edge-to-edge on either display. Its status bar and window controls have separate safe areas. Click the bottom home indicator to return Home; on Home, click the indicator for recent apps. Drag icons to reorder them, or press and hold/right-click for a menu. Dock icons can be reordered within the Dock. The order is saved.
-- In an app, choose its **•••** multitasking menu and **Open in Split View**, then select another app—including a second Safari window. Swap, resize, close either window, or save the pair. The resize range is intentionally limited so the central reserved hinge area remains clear. Closing the device collapses the view; reopening restores the pair.
-- The Today View widget menu controls the weather, calendar, and photo widgets. Calendar events for today are reflected in the widget. In Settings, switch language to فارسی for an RTL interface and Persian calendar. Most core system labels and major controls are translated; some demo copy and user/sample data remain in English.
-- **Reset simulator** asks for confirmation, then removes this origin's simulator settings, notes, events, browser data, transactions, and captured photos. The static offline cache is not personal data and is not removed. Reset recreates the initial sample data; use Accounting → Transactions → **Clear all transactions** to start with an empty ledger instead.
-
-## Apps and persistence
-
-- **Settings** affects the simulator's theme, wallpaper, brightness overlay, text size, selected accessibility options, notifications/badges, sound feedback, language, and simulated connectivity. The network, Bluetooth, cellular and battery indicators are examples and do not control or report real hardware. Always-On is a browser visual effect.
-- **Safari** has independent windows, tabs, history, bookmarks, back/forward, an editable favorites list, and offline demo pages/search. Search-engine selection labels the simulated search; it does not silently send a query to an external service. HTTP(S) sites can be previewed only where the site permits embedding. The iframe is sandboxed with scripts disabled; many sites will be blank or refuse embedding. Because browsers do not reliably reveal why an iframe failed, the app always provides an explanation and an **Open in browser** link rather than claiming a successful embed.
-- **Accounting** supports transaction creation, editing, deletion, date/type/category filters and search; categories and multiple sample accounts can be added, renamed and removed when not in use. Amounts are validated decimal strings stored as integer USD cents, with totals calculated using `BigInt`; no binary floating-point arithmetic is used for ledger totals. This is sample bookkeeping software, not financial advice or a bank connection.
-- **Calculator**, **Calendar**, **Clock**, **Notes**, **Photos**, **Files**, **Weather**, **App Store**, and **Camera** provide lightweight interactive experiences. Weather, maps, files, messages, phone, wallet, and App Store data are clearly simulated. Messages are not sent; phone calls, payments, native app installation and music playback are not provided.
-- The Camera requests explicit browser permission before using `getUserMedia`; photos captured in the simulator are saved locally. Availability depends on a secure context, a camera, browser support, and the user's permission.
-- A demo passcode can be enabled in Settings. Its fixed value is **1234**. It is only a UI simulation: it does **not** protect data, authenticate anyone, or provide Face ID/Touch ID. Never enter a real password or sensitive financial information.
-
-Settings, icon order, widget choices, recent apps and saved pairs use `localStorage`. Transactions, categories, accounts, notes, calendar events, Safari tabs/bookmarks/history and captured photos use IndexedDB via Dexie. Storage is local to this browser/origin; clearing browser data, private browsing, quota limits, or unavailable IndexedDB can remove or prevent persistence. Storage failures are surfaced in the UI where possible.
-
-## PWA and offline behavior
-
-The production build includes a web manifest and service worker. On a secure origin (or localhost), after one successful online visit and service-worker installation, the shell, built-in lazy app chunks, artwork and internal Safari demo pages can run offline. Each changed build versions the worker and installs a fresh, scope-specific offline cache; an update requires an online visit. External websites and browser camera availability remain subject to network and browser restrictions. Installation is a web-app convenience, not a native iOS app.
-
-## Tests
+## Testing
 
 ```bash
-npm run lint
+npm run lint                 # ESLint
 npm run test                 # Vitest + React Testing Library
 npx playwright install chromium
-npm run test:e2e             # desktop Chromium + touch/mobile emulation
-npm run test:offline         # builds/serves production and tests the PWA offline
-npm run test:pages           # tests a project-site subpath, assets, and offline apps
-npm run build                # strict TypeScript and Vite production build
+npm run test:e2e             # desktop Chromium + mobile/touch emulation
+npm run test:offline         # production PWA offline behavior
+npm run test:pages           # project-site subpath and offline updates
+npm run build                # TypeScript + Vite production build
 ```
 
-Playwright may require its operating-system browser dependencies (`npx playwright install-deps chromium` on supported systems). Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium executable if needed. The browser suite checks full-bleed app bounds and status-bar separation on both displays, portrait and landscape touch layouts, pose transitions, theme and wallpaper persistence, Safari tabs/bookmarks/history, accounting validation and exact balances, calculator operations, independent Split View windows and hinge clearance, notes/events, icon ordering, reset, lock simulation, and touch interactions. Mobile coverage is browser emulation, not a claim of testing on every physical device.
+Playwright may also need system dependencies: `npx playwright install-deps chromium`. Set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` to use an existing Chromium executable if needed. Mobile browser tests are emulation, not a claim of physical-device coverage.
 
-## Architecture
+## Built with
 
-- `src/device` — device frame, pose and display simulation.
-- `src/system` — Zustand state, Home/Lock screens, status bar, overlays, and window manager.
-- `src/apps` — app registry and independently loaded app modules.
-- `src/persistence` — Dexie schema, sample data, and reset.
-- `src/utils` — currency, calculator, calendar, time, and translation helpers.
-- `src/tests` and `e2e` — unit/component and browser tests.
+| Layer | Technology |
+| --- | --- |
+| Interface | React 19, TypeScript, custom CSS, Tailwind utilities |
+| State and motion | Zustand, Framer Motion |
+| Local database | IndexedDB and Dexie |
+| Build and offline | Vite, web app manifest, service worker |
+| Tests | Vitest, React Testing Library, Playwright |
 
-React + strict TypeScript, Vite, Tailwind utilities/custom CSS, Motion, Zustand, Dexie, and Lucide are used. The wallpaper, travel image, and glass backdrop in `public/` were generated for this concept; launcher icons are original SVG artwork using familiar mobile-app metaphors. They are not Apple's original icon files. No Apple model, design-kit files, or proprietary fonts are bundled.
+## Project structure
+
+```text
+src/
+├── app/          # site shell and device controls
+├── apps/         # app registry and lazy-loaded app experiences
+├── components/   # shared icons and UI components
+├── device/       # device frame and pose simulation
+├── persistence/  # Dexie schema, sample data, and reset
+├── styles/       # responsive layouts and visual refinements
+├── system/       # Home Screen, window manager, overlays, and state
+└── utils/        # currency, calculator, calendar, time, and i18n helpers
+
+e2e/              # desktop, mobile, offline, and Pages browser tests
+docs/             # screenshots and badges used in this README
+public/           # wallpaper, icons, artwork, manifest, and service worker
+```
 
 ## Design references
 
-The physical and adaptive-layout starting points were reviewed against:
+The project takes inspiration from these resources without bundling Apple's models, design-kit files, or proprietary fonts:
 
-1. [Apple Newsroom — Apple unveils iPhone Duo](https://www.apple.com/newsroom/2026/09/apple-unveils-iphone-duo/)
-2. [Apple Human Interface Guidelines — Designing for iPhone Duo](https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo)
-3. [Apple Design Resources](https://developer.apple.com/design/resources/)
+- [Apple Newsroom — Apple unveils iPhone Duo](https://www.apple.com/newsroom/2026/09/apple-unveils-iphone-duo/)
+- [Apple Human Interface Guidelines — Designing for iPhone Duo](https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo)
+- [Apple Design Resources](https://developer.apple.com/design/resources/)
+- [GSMArena iPhone Duo photo gallery](https://www.gsmarena.com/apple_iphone_duo_fold-pictures-13804.php) and the independent [iPhone Duo Fold Preview](https://iphone-duo-tawny.vercel.app/) for visual inspiration.
 
-The [GSMArena iPhone Duo photo gallery](https://www.gsmarena.com/apple_iphone_duo_fold-pictures-13804.php) and [iPhone Duo Fold Preview](https://iphone-duo-tawny.vercel.app/) were also reviewed for visual inspiration. The latter uses separately downloaded Apple assets; none of those assets are bundled here.
+The wallpaper, travel image, and glass backdrop were generated for this concept; launcher icons are original SVG artwork using familiar app metaphors. Screenshots in this README show the actual web simulator.
 
-Unspecified interaction details, sample content, animations, layouts, and hardware rendering are design decisions for this web concept—not claims about Apple's implementation. Apple, iPhone, iOS, and Safari are trademarks of their respective owner.
+## License and attribution
+
+No license file is currently included in this repository; do not assume permission to reuse or redistribute its code or assets. iPhone, iOS, Safari, and Apple are trademarks of Apple Inc. This independent project is not affiliated with or endorsed by Apple.

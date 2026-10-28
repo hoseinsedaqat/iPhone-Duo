@@ -1,0 +1,40 @@
+import { expect, test } from '@playwright/test'
+
+test('mobile touch can fold the device, open settings, change theme, and return home', async ({ page }) => {
+  const errors: string[] = []; page.on('pageerror', error => errors.push(error.message))
+  await page.goto('/')
+  await page.locator('.pose-button').filter({ hasText: 'Closed' }).tap()
+  await expect(page.locator('[data-testid="device-frame"]')).toHaveAttribute('data-mode', 'closed')
+  await page.getByRole('button', { name: 'Open Settings', exact: true }).tap()
+  await page.getByText('Display & Brightness', { exact: true }).tap()
+  await page.getByRole('button', { name: 'Dark', exact: true }).tap()
+  await expect(page.locator('.device-screen')).toHaveClass(/theme-dark/)
+  await page.getByRole('button', { name: 'Go Home', exact: true }).tap()
+  await expect(page.locator('.home-screen')).toBeVisible()
+  await page.reload(); await expect(page.locator('.device-screen')).toHaveClass(/theme-dark/)
+  expect(errors).toEqual([])
+})
+
+test('touch long press opens icon actions without opening the app', async ({ page }) => {
+  await page.goto('/')
+  const icon = page.getByRole('button', { name: 'Open Calendar', exact: true })
+  await icon.dispatchEvent('pointerdown', { pointerType: 'touch', button: 0 })
+  await page.waitForTimeout(650)
+  await icon.dispatchEvent('pointerup', { pointerType: 'touch', button: 0 })
+  await expect(page.getByRole('button', { name: 'Move later' })).toBeVisible()
+  await page.getByRole('button', { name: 'Move later' }).tap()
+  await expect(page.locator('.home-screen')).toBeVisible()
+})
+
+test('a touch swipe returns home and a long press opens recent apps', async ({ page }) => {
+  await page.goto('/')
+  await page.getByRole('button', { name: 'Open Calculator', exact: true }).tap()
+  const indicator = page.getByRole('button', { name: 'Go Home', exact: true })
+  await indicator.dispatchEvent('pointerdown', { pointerType: 'touch', pointerId: 44, clientY: 500 })
+  await indicator.dispatchEvent('pointerup', { pointerType: 'touch', pointerId: 44, clientY: 450 })
+  await expect(page.locator('.home-screen')).toBeVisible()
+  const homeIndicator = page.getByRole('button', { name: 'Open app switcher' })
+  await homeIndicator.dispatchEvent('pointerdown', { pointerType: 'touch', pointerId: 45, clientY: 500 })
+  await page.waitForTimeout(700)
+  await expect(page.getByText('Recent Apps', { exact: true })).toBeVisible()
+})

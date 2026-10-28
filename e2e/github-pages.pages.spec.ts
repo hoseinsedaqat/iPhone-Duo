@@ -8,6 +8,9 @@ test('project Pages loads assets, manifest, and never-opened apps offline', asyn
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
 
   await page.goto('./')
+  await expect(page).toHaveTitle(/iPhone Duo Simulator.*Unofficial/)
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /unofficial iPhone Duo web simulator.*Split View/i)
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', /iPhone Duo Simulator.*Unofficial/)
   await expect(page.locator('.home-screen')).toBeVisible()
   await expect(page.locator('.wallpaper-layer')).toHaveCSS('background-image', /\/iPhone-Duo\/wallpapers\/aurora\.png/)
   await expect(page.locator('.site-shell')).toHaveCSS('background-image', /\/iPhone-Duo\/images\/glass-atmosphere\.jpg/)
@@ -46,6 +49,7 @@ test('project Pages loads assets, manifest, and never-opened apps offline', asyn
 
   await context.setOffline(true)
   await page.reload()
+  await expect(page).toHaveTitle(/iPhone Duo Simulator.*Unofficial/)
   await expect(page.locator('.home-screen')).toBeVisible()
   const offlineBackgroundWidth = await page.evaluate(async () => {
     const image = new Image()

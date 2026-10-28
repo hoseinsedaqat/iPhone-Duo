@@ -1,0 +1,198 @@
+/* Full-bleed app surfaces. The screen itself clips the outer rounded corners. */
+.window-manager { padding: 0; background: var(--app-chrome-bg, #f4f4f7); }
+.window-manager.is-split { padding: var(--status-height) 0 0; }
+.single-pane, .split-panes { min-height: 0; }
+.app-window { width: 100%; height: 100%; border-radius: 0; box-shadow: none; }
+.device-screen .app-window { --app-chrome-bg: #f4f4f7; --app-chrome-text: #25252a; background: var(--app-chrome-bg); color: var(--app-chrome-text); }
+.device-screen .app-window:is([data-app='photos'], [data-app='calendar'], [data-app='notes'], [data-app='files'], [data-app='appstore'], [data-app='messages'], [data-app='phone'], [data-app='music']) { --app-chrome-bg: #fff; }
+.device-screen.theme-dark .app-window { --app-chrome-bg: #19191e; --app-chrome-text: #f5f5f6; }
+.device-screen.theme-dark .app-window:is([data-app='photos'], [data-app='calendar'], [data-app='notes'], [data-app='files'], [data-app='appstore'], [data-app='messages'], [data-app='phone'], [data-app='music']) { --app-chrome-bg: #2b2b31; }
+.device-screen .app-window:is([data-app='calculator'], [data-app='clock'], [data-app='camera'], [data-app='wallet']) { --app-chrome-bg: #171719; --app-chrome-text: #fff; }
+.device-screen .app-window[data-app='calculator'] { --app-chrome-bg: #151517; }
+.device-screen .app-window[data-app='camera'] { --app-chrome-bg: #141416; }
+.device-screen .app-window[data-app='wallet'] { --app-chrome-bg: #1d1d22; }
+.device-screen .app-window[data-app='weather'] { --app-chrome-bg: #438bc2; --app-chrome-text: #fff; }
+.device-screen .app-window[data-app='maps'] { --app-chrome-bg: #e8ebe1; --app-chrome-text: #25252a; }
+.single-pane .app-window { padding-top: var(--status-height); }
+.window-titlebar { flex: 0 0 var(--app-toolbar-height); position: relative; padding: 0 12px; gap: 8px; }
+.device-screen .window-titlebar { background: var(--app-chrome-bg, #f4f4f7); color: var(--app-chrome-text, #25252a); }
+.window-title, .window-actions { display: flex; align-items: center; gap: 7px; }
+.window-title { min-width: 0; color: inherit; opacity: .7; }
+.window-title .app-icon { flex-shrink: 0; }
+.window-title span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.window-actions { flex: none; }
+.window-actions button { flex: 0 0 26px; width: 26px; height: 26px; color: inherit; background: color-mix(in srgb, currentColor 9%, transparent); }
+.window-actions button:hover { background: color-mix(in srgb, currentColor 18%, transparent); }
+.single-pane .window-title { display: none; }
+/* Keep both actions together at the trailing edge, mirrored in RTL. */
+.single-pane .window-actions { height: 100%; margin-inline-start: auto; }
+.app-window .multitasking-menu { top: calc(var(--app-toolbar-height) - 1px); left: auto; right: auto; inset-inline-end: 8px; width: min(150px, calc(100% - 16px)); max-height: calc(100% - var(--app-toolbar-height) - 6px); overflow: auto; overscroll-behavior: contain; transform: none; }
+.single-pane .multitasking-menu { top: calc(var(--status-height) + var(--app-toolbar-height) - 1px); max-height: calc(100% - var(--status-height) - var(--app-toolbar-height) - 6px); }
+.split-panes > .app-window:first-child .window-titlebar { flex-direction: row; }
+.split-controls { color: var(--app-chrome-text, #25252a); padding: 0 9px; }
+.split-controls button { color: inherit; background: color-mix(in srgb, currentColor 10%, transparent); }
+.split-controls input { accent-color: #7f93a8; }
+.split-reserved { background: linear-gradient(90deg, #a4aab215, #61697725, #a4aab215); }
+.split-reserved span { background: #858d99a0; }
+
+/* Keep the home gesture clear without introducing a wallpaper-colored frame. */
+.single-pane .safari-bottom { padding-bottom: 18px; }
+.single-pane .camera-controls { padding-bottom: 22px; }
+.single-pane .messages-app > small { padding-bottom: 20px; }
+.single-pane .app-scroll { scroll-padding-bottom: 22px; }
+.single-pane .settings-list, .single-pane .settings-detail, .single-pane .accounting-scroll, .single-pane .calendar-body, .single-pane .photos-content, .single-pane .files-content, .single-pane .store-content { padding-bottom: 26px; }
+.calculator-body { overflow: hidden; padding-bottom: 24px; }
+.calculator-display { min-height: 32px; }
+.calculator-keys { flex: 0 1 min(70%, 360px); min-height: 0; grid-template-rows: repeat(5, minmax(0, 1fr)); }
+.calculator-keys button { min-height: 0; height: 100%; aspect-ratio: auto; border-radius: 999px; }
+.calculator-body > small { margin-top: 5px; }
+
+@container (max-width: 430px) {
+  .window-manager { padding: 0; }
+  .window-manager.is-split { padding-top: var(--status-height); }
+  .window-titlebar { flex-basis: var(--app-toolbar-height); }
+  .window-actions button { flex-basis: 24px; width: 24px; height: 24px; }
+  .calculator-body { padding-bottom: 20px; }
+  .calculator-keys { gap: 4px; margin-top: 6px; }
+  .calculator-keys button { font-size: clamp(13px, 5cqw, 19px); }
+}
+
+/* Individually drawn, scalable launcher artwork with subtle glass highlights. */
+.app-icon { box-shadow: inset 0 1px 1px #ffffff9c, 0 3px 8px #15182930; }
+.app-icon::after { content: ''; position: absolute; inset: 0; border: 1px solid #ffffff4d; border-radius: inherit; background: linear-gradient(160deg, #ffffff24, transparent 42%); pointer-events: none; }
+.app-icon svg { width: 100%; height: 100%; padding: 0; }
+.icon-safari, .icon-calendar, .icon-photos, .icon-files, .icon-music { background: linear-gradient(155deg, #fff, #f1f2f5); }
+.icon-camera { background: linear-gradient(155deg, #e1e3e6, #a3a8af); }
+.icon-clock { background: linear-gradient(155deg, #2b2b2e, #0e1013); }
+.icon-appstore { background: linear-gradient(155deg, #53c7ff, #0675e9); }
+.icon-notes { background: linear-gradient(155deg, #fff, #f1f0eb); }
+.icon-weather { background: linear-gradient(155deg, #1ba6f2, #1172d0); }
+.icon-accounting { background: linear-gradient(150deg, #89dcb0, #27996c); }
+.icon-calculator { background: linear-gradient(155deg, #4c4e51, #242528); }
+.icon-settings { background: linear-gradient(155deg, #e3e5e6, #92999f); }
+.icon-wallet { background: linear-gradient(155deg, #353a42, #101217); }
+.icon-messages, .icon-phone { background: linear-gradient(155deg, #70e977, #20bd4e); }
+
+/* Less copy on the launcher keeps the apps and their live widgets in focus. */
+.today-heading { min-height: 28px; margin-bottom: 11px; }
+.today-date { color: #ffffffd9; font-size: 10px; letter-spacing: .045em; }
+.widget { border-color: #ffffff50; box-shadow: inset 0 1px #ffffff40, 0 8px 20px #1012271a; }
+.weather-widget { background: linear-gradient(145deg, #76b6e5d9, #477bbbd1); }
+.calendar-widget { background: #fafaf8ec; }
+.photo-overlay { background: linear-gradient(0deg, #171f2a85, transparent 58%); }
+.photo-widget-label { left: 12px; bottom: 11px; display: inline-flex; padding: 5px 8px; border: 1px solid #ffffff45; border-radius: 20px; background: #ffffff35; color: white; font-size: 9px; font-weight: 650; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.today-search { width: fit-content; min-width: 82px; border-radius: 20px; padding: 6px 10px; }
+.dock { background: #f4f5ff4d; border-color: #ffffff52; box-shadow: inset 0 1px 1px #ffffff80, 0 8px 24px #11162521; }
+
+@container (max-width: 430px) {
+  .home-screen:not(.home-compact) .home-page { row-gap: 2px; }
+  .home-screen:not(.home-compact) .app-icon-holder .app-icon { width: 31px !important; height: 31px !important; }
+  .home-screen:not(.home-compact) .app-label { font-size: 6.5px; }
+  .today-heading { min-height: 19px; margin-bottom: 6px; }
+  .today-date { font-size: 6px; }
+  .photo-widget-label { left: 6px; bottom: 6px; padding: 3px 6px; font-size: 7px; }
+  .today-search { min-width: 60px; padding: 3px 7px; }
+  .calculator-display { position: relative; }
+  .calculator-display span { position: absolute; left: 0; bottom: 3px; max-width: 42%; min-height: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 9px; }
+  .calculator-display output { flex: 0 0 auto; max-width: 55%; font-size: clamp(27px, 8cqw, 36px); line-height: 1; }
+}
+
+/* On shorter screens the dock moves to the side, like an adaptive system
+   bar, rather than covering the last row of launcher icons. */
+@container (max-height: 500px) {
+  .landscape .home-screen:not(.home-compact) .home-content { inset: 54px 76px 28px 18px; grid-template-columns: 45% 55%; }
+  .landscape .home-screen:not(.home-compact) .dock { left: auto; right: 14px; top: 48px; bottom: 24px; width: 58px; height: auto; flex-direction: column; padding: 5px; gap: 3px; }
+  .landscape .home-screen:not(.home-compact) .dock .app-icon { width: 43px !important; height: 43px !important; }
+  .landscape .home-screen:not(.home-compact) .dock-app-wrap { width: 100%; }
+  .landscape .device-screen[dir='rtl'] .home-screen:not(.home-compact) .home-content { inset: 54px 18px 28px 76px; }
+  .landscape .device-screen[dir='rtl'] .home-screen:not(.home-compact) .dock { left: 14px; right: auto; }
+}
+@container (max-width: 430px) and (max-height: 250px) {
+  .home-screen:not(.home-compact) .home-content, .landscape .home-screen:not(.home-compact) .home-content { inset: 34px 56px 20px 8px; grid-template-columns: 40% 60%; }
+  .home-screen:not(.home-compact) .dock, .landscape .home-screen:not(.home-compact) .dock { left: auto; right: 8px; top: 37px; bottom: 20px; width: 43px; height: auto; flex-direction: column; padding: 4px; gap: 2px; }
+  .home-screen:not(.home-compact) .dock .app-icon, .landscape .home-screen:not(.home-compact) .dock .app-icon { width: 29px !important; height: 29px !important; }
+  .home-screen:not(.home-compact) .dock-app-wrap { width: 100%; }
+  .device-screen[dir='rtl'] .home-screen:not(.home-compact) .home-content, .landscape .device-screen[dir='rtl'] .home-screen:not(.home-compact) .home-content { inset: 34px 8px 20px 56px; }
+  .device-screen[dir='rtl'] .home-screen:not(.home-compact) .dock, .landscape .device-screen[dir='rtl'] .home-screen:not(.home-compact) .dock { left: 8px; right: auto; }
+}
+@container (max-width: 430px) and (max-height: 220px) {
+  .mode-closed.landscape .home-compact .home-content { inset: 34px 52px 17px 8px; }
+  .mode-closed.landscape .home-compact .home-page { row-gap: 6px; }
+  .mode-closed.landscape .home-compact .app-icon-holder .app-icon { width: clamp(21px, 7cqw, 30px) !important; height: clamp(21px, 7cqw, 30px) !important; border-radius: 6px !important; }
+  .mode-closed.landscape .home-compact .app-label { font-size: 6px; }
+  .mode-closed.landscape .home-compact .dock { left: auto; right: 8px; top: 35px; bottom: 16px; width: 39px; height: auto; flex-direction: column; padding: 4px; gap: 2px; }
+  .mode-closed.landscape .home-compact .dock-app-wrap { width: 100%; }
+  .mode-closed.landscape .home-compact .dock .app-icon { width: 27px !important; height: 27px !important; }
+  .mode-closed.landscape .device-screen[dir='rtl'] .home-compact .home-content { inset: 34px 8px 17px 52px; }
+  .mode-closed.landscape .device-screen[dir='rtl'] .home-compact .dock { left: 8px; right: auto; }
+}
+
+/* In Split View, keep the home gesture off the reserved hinge and legible
+   against either pane, including mixed light and dark apps. */
+.device-screen:has(.window-manager.is-split) .home-indicator-button { left: 75%; }
+.device-screen[dir='rtl']:has(.window-manager.is-split) .home-indicator-button { left: 25%; }
+.device-screen:has(.window-manager.is-split) .home-indicator-button span { background: #fff; opacity: .9; mix-blend-mode: difference; }
+
+/* Sheets and scrolling content stay operable above the home gesture area. */
+.app-modal-scrim { padding-bottom: 20px; }
+.transaction-form, .simple-modal { padding-bottom: 22px; scroll-padding-bottom: 22px; }
+.device-screen:has(.app-modal-scrim) .home-indicator-button span { background: #fff; }
+.single-pane .notes-sidebar, .single-pane .note-editor, .single-pane .music-app, .single-pane .wallet-app { padding-bottom: 26px; }
+.phone-app, .weather-app, .clock-app { overflow-y: auto; }
+.phone-app, .weather-app-content, .clock-app { padding-bottom: 28px; }
+.weather-app-content { height: auto; min-height: 100%; }
+
+@container (max-width: 430px) and (max-height: 250px) {
+  .home-screen:not(.home-compact) .home-page { row-gap: 0; }
+  .home-screen:not(.home-compact) .app-button { gap: 1px; }
+  .home-screen:not(.home-compact) .app-icon-holder .app-icon { width: clamp(24px, 8.5cqw, 29px) !important; height: clamp(24px, 8.5cqw, 29px) !important; }
+  .home-screen:not(.home-compact) .app-label { font-size: 6px; }
+  .home-screen:not(.home-compact) .today-date { max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .home-screen:not(.home-compact) .weather-widget .widget-bottom { display: none; }
+}
+@container (min-width: 431px) and (max-height: 500px) {
+  .landscape .home-screen:not(.home-compact) .home-page { row-gap: 10px; }
+}
+/* A calculator's keypad and expression order remain conventional in RTL. */
+.calculator-app { direction: ltr; }
+
+/* Keep menus and the camera permission reachable on short displays. */
+@container (max-height: 300px) {
+  .multitasking-menu button { padding: 5px 6px; gap: 5px; font-size: 9px; line-height: 1.15; }
+  .multitasking-menu button svg { width: 13px; flex-shrink: 0; }
+  .camera-app { display: grid; grid-template-columns: minmax(0, 1fr) 72px; grid-template-rows: 24px minmax(0, 1fr); }
+  .camera-top { grid-column: 1 / -1; padding: 5px 14px; }
+  .camera-viewfinder { grid-column: 1; grid-row: 2; min-height: 0; }
+  .camera-mode { display: none; }
+  .camera-controls, .single-pane .camera-controls { grid-column: 2; grid-row: 2; flex-direction: column; padding: 3px 0 18px; }
+  .camera-controls > button:not(.shutter) { width: 28px; height: 28px; }
+  .camera-controls > button:not(.shutter) svg { width: 16px; height: 16px; }
+  .shutter { width: 43px; height: 43px; }
+  .camera-placeholder { padding: 4px; }
+  .camera-placeholder > svg { display: none; }
+  .camera-placeholder h2 { margin: 0 0 4px; font-size: 14px; }
+  .camera-placeholder p { margin: 0 0 5px; line-height: 1.25; }
+  .camera-placeholder button { padding: 6px 12px; }
+  .camera-error, .camera-saved { bottom: 2px; padding: 4px; font-size: 9px; }
+}
+
+/* Use a landscape calculator arrangement instead of crushing five rows. */
+@container (max-height: 300px) {
+  .calculator-body { width: 100%; display: grid; grid-template-columns: minmax(55px, 24%) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 8px; padding: 4px 12px 18px; }
+  .calculator-display { min-height: 0; justify-content: center; align-items: flex-end; }
+  .calculator-display span { position: static; max-width: 100%; font-size: 9px; }
+  .calculator-display output { max-width: 100%; font-size: clamp(23px, 7cqw, 36px); }
+  .calculator-keys { margin: 0; gap: 2px 4px; }
+  .calculator-keys button { font-size: 12px; }
+  .calculator-body > small { display: none; }
+}
+
+@container (max-height: 300px) {
+  .messages-header { padding: 4px 12px 0; }
+  .messages-header h1 { font-size: 16px; }
+  .message-conversation { min-height: 0; padding: 2px 12px; gap: 4px; }
+  .message-date { display: none; }
+  .message-bubble { padding: 5px 9px; font-size: 10px; }
+  .message-compose { flex-shrink: 0; margin: 2px 10px 20px; padding: 1px; }
+  .messages-app > small { display: none; }
+}

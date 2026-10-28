@@ -7,7 +7,7 @@
   -webkit-font-smoothing: antialiased;
 }
 * { box-sizing: border-box; }
-body { margin: 0; min-width: 320px; }
+body { margin: 0; min-width: 280px; }
 button, input, textarea, select { font: inherit; }
 button { cursor: pointer; }
 button:disabled { cursor: not-allowed; }
@@ -36,11 +36,17 @@ a { color: inherit; text-decoration: none; }
 .header-icon { width: 38px; display: grid; place-items: center; border-radius: 50%; }
 .header-help { display: flex; align-items: center; gap: 7px; padding: 0 14px; border-radius: 22px; font-size: 11px; font-weight: 650; }
 .header-icon:hover, .header-help:hover { color: #263340; background: #ffffffc7; }
-.help-popover { position: absolute; z-index: 100; right: clamp(20px, 4.2vw, 64px); top: 65px; width: min(300px, calc(100vw - 40px)); padding: 20px; border: 1px solid #fff; border-radius: 20px; background: #f8fafdEB; box-shadow: 0 18px 60px #4b627c30; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); color: #65717e; font-size: 12px; line-height: 1.6; }
+.help-anchor { position: relative; }
+.help-popover { position: absolute; z-index: 100; right: 0; top: calc(100% + 10px); width: min(300px, calc(100vw - 36px)); max-height: max(0px, calc(100dvh - 74px)); overflow-y: auto; overscroll-behavior: contain; padding: 20px; border: 1px solid #fff; border-radius: 20px; background: #f8fafdEB; box-shadow: 0 18px 60px #4b627c30; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); color: #65717e; font-size: 12px; line-height: 1.6; }
 .help-popover strong { color: #26313d; font-size: 15px; letter-spacing: -.02em; }
 .help-popover p { margin: 9px 0 13px; }
-.help-popover small { color: #7c8792; }
-.help-popover > button { float: right; display: grid; place-items: center; border: 0; background: transparent; color: #75808a; }
+.help-popover small { display: block; padding-top: 11px; border-top: 1px solid #dbe3ea; color: #7c8792; }
+.help-controls { display: grid; gap: 7px; margin: 0 0 13px; padding: 0; list-style: none; }
+.help-controls li { display: flex; align-items: flex-start; gap: 8px; }
+.help-controls svg { flex: 0 0 auto; margin-top: 2px; color: #5d7186; }
+.help-controls b { color: #26313d; font-weight: 700; }
+.help-popover > button { float: right; display: grid; place-items: center; width: 32px; height: 32px; margin: -8px -8px 0 4px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #75808a; }
+.help-popover > button:hover { background: #dce5ed90; color: #263340; }
 
 .workspace { width: 100%; flex: 1; min-height: 0; margin: 0 auto; padding: 4px 24px 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 21px; }
 .device-column { width: 100%; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 13px; }
@@ -48,12 +54,12 @@ a { color: inherit; text-decoration: none; }
 .display-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid #ffffffcc; border-radius: 20px; background: #ffffff82; color: #65727f; box-shadow: inset 0 1px #fff, 0 4px 16px #7c899912; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); font-size: 10px; font-weight: 650; letter-spacing: .02em; }
 .display-badge i { width: 6px; height: 6px; border-radius: 50%; background: #8eafc2; box-shadow: 0 0 0 3px #a7c7d533; }
 
-.controls-column { width: min(100%, 900px); display: flex; align-items: center; justify-content: center; gap: 20px; padding: 13px 18px; border: 1px solid #ffffffd9; border-radius: 22px; background: linear-gradient(135deg, #ffffffc9, #f2f6fbc4); box-shadow: 0 15px 40px #7080951c, inset 0 1px #fff, inset 0 -1px #c6d0dd50; backdrop-filter: blur(28px) saturate(1.35); -webkit-backdrop-filter: blur(28px) saturate(1.35); }
+.controls-column { width: min(100%, 1030px); display: flex; align-items: center; justify-content: center; gap: 20px; padding: 13px 18px; border: 1px solid #ffffffd9; border-radius: 22px; background: linear-gradient(135deg, #ffffffc9, #f2f6fbc4); box-shadow: 0 15px 40px #7080951c, inset 0 1px #fff, inset 0 -1px #c6d0dd50; backdrop-filter: blur(28px) saturate(1.35); -webkit-backdrop-filter: blur(28px) saturate(1.35); }
 .control-section { min-width: 0; }
 .pose-section { flex: 1; }
 .control-label { display: block; margin: 0 0 7px 4px; color: #8793a0; font-size: 9px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
 .pose-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 3px; background: #d8e0e863; border-radius: 13px; }
-.pose-button { min-width: 0; min-height: 40px; padding: 5px 7px; display: flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #788492; font-size: 10px; font-weight: 650; white-space: nowrap; }
+.pose-button { min-width: 0; min-height: 40px; padding: 5px 4px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #788492; font-size: 10px; font-weight: 650; white-space: nowrap; }
 .pose-button:hover { color: #334558; background: #ffffff80; }
 .pose-button.active { color: #25384b; border-color: #ffffffd9; background: #fff; box-shadow: 0 3px 10px #60758b1c; }
 .pose-icon { width: 25px; height: 20px; display: inline-flex; flex: 0 0 auto; align-items: center; justify-content: center; color: #758b9d; }
@@ -71,22 +77,33 @@ a { color: inherit; text-decoration: none; }
 .orientation-control button { flex: 1; min-width: 0; height: 40px; display: flex; justify-content: center; align-items: center; gap: 5px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #84909d; font-size: 10px; font-weight: 650; }
 .orientation-control button.active { background: #fff; color: #33495e; border-color: #ffffffd9; box-shadow: 0 3px 10px #60758b1c; }
 .rotate-icon { transform: rotate(90deg); }
-.quick-controls { display: flex; align-items: center; gap: 5px; padding-top: 15px; }
-.quick-controls button { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid #ffffffba; border-radius: 12px; background: #ffffff8a; color: #677789; }
+.quick-section { flex: 0 0 auto; }
+.quick-controls { display: flex; align-items: center; gap: 3px; padding: 3px; border-radius: 13px; background: #d8e0e863; }
+.quick-controls button { min-height: 40px; padding: 0 9px; display: flex; align-items: center; justify-content: center; gap: 5px; border: 1px solid transparent; border-radius: 10px; background: transparent; color: #677789; font-size: 10px; font-weight: 650; }
 .quick-controls button:hover { color: #233a51; background: #fff; }
 .quick-controls .reset-button:hover { color: #b65a64; }
+.home-feedback { min-height: 18px; margin-top: -8px; color: #55677a; font-size: 11px; line-height: 1.4; text-align: center; opacity: 0; transition: opacity .2s ease; }
+.home-feedback.visible { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .home-feedback { transition: none; } }
 .site-footer { min-height: 35px; padding: 0 20px 14px; text-align: center; color: #84909c; font-size: 10px; }
 .site-footer span { padding: 0 3px; }
 .site-error { position: fixed; z-index: 200; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; color: #8a3030; background: #fff0f0; box-shadow: 0 5px 22px #0002; font-size: 12px; }
 .site-error button { border: 0; background: none; color: inherit; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
+@media (min-width: 621px) and (max-width: 1099px) {
+  .controls-column { flex-wrap: wrap; gap: 10px 12px; }
+  .pose-section { flex: 1 0 100%; }
+  .control-divider { display: none; }
+  .orientation-section { flex: 1 1 180px; }
+  .quick-section { flex: 0 0 auto; }
+}
 @media (max-width: 780px) {
   .controls-column { gap: 12px; padding: 12px; }
   .pose-button { gap: 4px; font-size: 9px; }
   .orientation-section { flex-basis: 155px; }
-  .quick-controls { gap: 4px; }
-  .quick-controls button { width: 34px; height: 38px; }
+  .quick-controls { gap: 2px; }
+  .quick-controls button { padding: 0 6px; }
 }
 @media (max-width: 620px) {
   .site-shell { background-attachment: scroll; }
@@ -97,8 +114,7 @@ a { color: inherit; text-decoration: none; }
   .workspace { justify-content: flex-start; gap: 19px; padding: 8px 14px 22px; }
   .device-column { gap: 11px; }
   .display-badge { font-size: 9px; padding: 6px 10px; }
-  .controls-column { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px 12px; padding: 14px; border-radius: 20px; }
-  .pose-section { grid-column: 1 / -1; }
+  .controls-column { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 14px; border-radius: 20px; }
   .pose-grid { gap: 2px; }
   .pose-button { min-height: 57px; flex-direction: column; gap: 3px; padding: 5px 2px; white-space: normal; line-height: 1.05; text-align: center; }
   .pose-button span:last-child { font-size: 9px; }
@@ -106,8 +122,13 @@ a { color: inherit; text-decoration: none; }
   .control-divider { display: none; }
   .orientation-section { min-width: 0; }
   .orientation-control button { height: 37px; }
-  .quick-controls { padding-top: 0; align-self: end; }
-  .quick-controls button { width: 36px; height: 38px; }
+  .quick-section { min-width: 0; }
+  .quick-controls { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .quick-controls button { min-width: 0; height: 37px; padding: 0 4px; }
   .site-footer { padding-bottom: 18px; font-size: 9px; }
 }
-@media (max-width: 360px) { .workspace { padding-left: 10px; padding-right: 10px; }.quick-controls button { width: 32px; }.orientation-control button { font-size: 9px; } }
+@media (max-width: 360px) { .workspace { padding-left: 10px; padding-right: 10px; }.orientation-control button { font-size: 9px; } .quick-controls button { font-size: 9px; gap: 3px; } }
+@media (max-width: 300px) {
+  .controls-column { grid-template-columns: minmax(0, 1fr); }
+  .quick-controls button { height: 40px; }
+}

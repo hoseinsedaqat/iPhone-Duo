@@ -89,8 +89,8 @@ The development and preview servers bind to `0.0.0.0` for remote preview support
 
 ## How to explore
 
-1. **Choose a pose.** Use the controls below the device to switch displays, positions, and orientation. Hide the control panel with the eye button if you prefer.
-2. **Open an app.** Select an icon, then use the home indicator to return Home. On the Home Screen, the indicator opens recent apps. Drag icons to reorder them; press and hold or right-click for more options.
+1. **Choose a pose.** Use the controls below the device to switch displays, positions, and orientation. The **Lock**, **Home**, and **Reset** buttons share that panel, and the **Guide** button explains them. Hide the panel with the eye button if you prefer.
+2. **Open an app.** Select an icon, then use the home indicator to return Home. On the Home Screen, the indicator opens recent apps. The **Home** button in the control panel explains itself when you are already home or locked. Drag icons to reorder them; press and hold or right-click for more options.
 3. **Try Split View.** In an app, open its **•••** menu, choose **Open in Split View**, and select a second app. Swap, resize, save, or close the pair. A reserved area keeps the central hinge clear.
 4. **Make it yours.** Explore Settings and the widget menu for themes, wallpapers, language, accessibility options, and layout choices.
 5. **Start fresh when needed.** The reset control asks for confirmation before removing this origin's simulator data and restoring the sample data.

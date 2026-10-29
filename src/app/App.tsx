@@ -101,9 +101,7 @@ export function App() {
         <h1 className="sr-only">iPhone Duo interactive simulator</h1>
         <div className="device-topline"><span className="display-badge"><i/>{mode === 'closed' ? '5.4″ Outer display' : '7.6″ Inner display'}</span></div>
         <DeviceFrame/>
-      </section>
-
-      {showControls && <aside className="controls-column" aria-label="Device controls">
+        {showControls && <aside className="controls-column" aria-label="Device controls">
         <div className="control-section pose-section">
           <span className="control-label">Device position</span>
           <div className="pose-grid">{modes.map(item => <button key={item.id} aria-pressed={mode === item.id} className={`pose-button ${mode === item.id ? 'active' : ''}`} onClick={() => setMode(item.id)}><PoseIcon mode={item.id}/><span>{item.label}</span></button>)}</div>
@@ -122,7 +120,8 @@ export function App() {
             <button aria-label="Reset simulator" title="Reset simulator" className="reset-button" onClick={() => void reset()}><RotateCcw size={17}/><span>{t('Reset')}</span></button>
           </div>
         </div>
-      </aside>}
+        </aside>}
+      </section>
       <span id="home-feedback" className={`home-feedback ${homeFeedback ? 'visible' : ''}`} role="status" aria-live="polite" dir={settings.language === 'fa' ? 'rtl' : 'ltr'}>{homeFeedback ? t(homeFeedback) : ''}</span>
     </main>
 

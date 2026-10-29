@@ -196,3 +196,28 @@
   .message-compose { flex-shrink: 0; margin: 2px 10px 20px; padding: 1px; }
   .messages-app > small { display: none; }
 }
+
+/* The launcher sizes its icons and row gaps from the display itself, not
+   from the browser window, so four rows of apps always clear the dock. */
+.home-screen:not(.home-compact) { --launcher-inset: 148px; --launcher-label: 17px; }
+.home-screen:not(.home-compact) .home-page { row-gap: clamp(5px, 2.2cqw, 18px); }
+.home-screen:not(.home-compact) .app-icon-holder .app-icon {
+  --launcher-icon: clamp(20px, min(11cqw, 12cqh, (100cqh - var(--launcher-inset) - 3 * clamp(5px, 2.2cqw, 18px)) / 4 - var(--launcher-label) - 6px), 56px);
+  width: var(--launcher-icon) !important;
+  height: var(--launcher-icon) !important;
+  border-radius: calc(var(--launcher-icon) * .225) !important;
+}
+.home-screen:not(.home-compact) .app-label { font-size: clamp(6px, 1.15cqw, 9px); }
+@container (max-width: 600px) { .home-screen:not(.home-compact) { --launcher-inset: 119px; --launcher-label: 13px; } }
+@container (max-width: 430px) { .home-screen:not(.home-compact) { --launcher-inset: 94px; --launcher-label: 11px; } }
+@container (max-height: 500px) {
+  .landscape .home-screen:not(.home-compact) { --launcher-inset: 82px; --launcher-label: 12px; }
+}
+@container (max-width: 430px) and (max-height: 250px) {
+  .home-screen:not(.home-compact) { --launcher-inset: 54px; --launcher-label: 7px; }
+  .home-screen:not(.home-compact) .home-page { row-gap: clamp(3px, 1.8cqw, 10px); }
+}
+/* On very short displays labels and icons shrink together instead of clipping. */
+@container (max-height: 320px) {
+  .home-screen:not(.home-compact) .app-label { font-size: 7px; }
+}
